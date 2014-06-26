@@ -3,6 +3,9 @@
 #include "ofMain.h"
 #include "LMS1xx.h"
 
+#include <sick_tim3xx/sick_tim3xx_common_tcp.h>
+#include <sick_tim3xx/sick_tim551_2050001_parser.h>
+
 class PulseData {
 public:
 	vector<unsigned short> distance, brightness;
