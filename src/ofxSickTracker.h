@@ -9,6 +9,8 @@
 #include "ofxSick.h"
 #include "ofxCv.h"
 
+#include "ofxTuioServer.h"
+
 class ofxSickFollower : public ofxCv::PointFollower {
 protected:
 	cv::Point2f position, recent;
@@ -36,6 +38,9 @@ public:
 	,maxPointDistance(50)
 	,useKmeans(true)
 	,maxStddev(60) { // 60 is good for hand/arm tracking
+
+
+		tuioServer.start("",0);
 	}
 	void setupKmeans(float maxStddev, unsigned int maxClusterCount) {
 		this->maxClusterCount = maxClusterCount;
@@ -62,6 +67,7 @@ public:
 		ofPopStyle();
 	}
 	void update(ofxSick& sick) {
+		tuioServer.run();
 		if(useKmeans) {
 			updateKmeans(sick);
 		} else {
@@ -86,6 +92,8 @@ protected:
 	bool useKmeans;
 	int minClusterSize, maxPointDistance;
 	
+	ofxTuioServer tuioServer;
+
 	void updateNaive(ofxSick& sick) {
 		const vector<ofVec2f>& points = sick.getPointsFirst();
 		if(points.size() > 0) {

@@ -220,9 +220,9 @@ void ofxSickGrabber::connect() {
 	}
 	
 	ofLogNotice("ofxSickGrabber") << "Logging in.";
-	laser.login();
+	//laser.login();
 	
-	laser.stopMeas(); // unnecessary?
+	//laser.stopMeas(); // unnecessary?
 	
 	scanCfg targetCfg;
 	targetCfg.angleResolution = angularResolution * 1000;
@@ -231,7 +231,7 @@ void ofxSickGrabber::connect() {
 	targetCfg.stopAngle = stopAngle * 10000; // 0 defaults to 225 * 10000.
 	
 	ofLogNotice("ofxSickGrabber") << "Setting new scan configuration.";
-	laser.setScanCfg(targetCfg);
+	//laser.setScanCfg(targetCfg);
 	
 	ofLogNotice("ofxSickGrabber") << "Updating current scan configuration.";
 	scanCfg curCfg = laser.getScanCfg();
@@ -242,10 +242,10 @@ void ofxSickGrabber::connect() {
 	stopAngle = curCfg.stopAngle / 10000.;	
 	ofLogNotice("ofxSickGrabber") << scanningFrequency << "Hz at " << angularResolution << "deg, from " << startAngle << "deg to " << stopAngle << "deg";
 	
-	confirmCfg(curCfg.angleResolution, targetCfg.angleResolution, "angular resolution");
-	confirmCfg(curCfg.scaningFrequency, targetCfg.scaningFrequency, "scanning frequency");
-	confirmCfg(curCfg.startAngle, targetCfg.startAngle, "start angle");
-	confirmCfg(curCfg.stopAngle, targetCfg.stopAngle, "stop angle");
+	//confirmCfg(curCfg.angleResolution, targetCfg.angleResolution, "angular resolution");
+	//confirmCfg(curCfg.scaningFrequency, targetCfg.scaningFrequency, "scanning frequency");
+	//confirmCfg(curCfg.startAngle, targetCfg.startAngle, "start angle");
+	//confirmCfg(curCfg.stopAngle, targetCfg.stopAngle, "stop angle");
 	
 	bool enableSecondReturn = false;
 	scanDataCfg targetDataCfg;
@@ -258,22 +258,24 @@ void ofxSickGrabber::connect() {
 	targetDataCfg.outputInterval = 1; // don't skip any frames
 	
 	ofLogNotice("ofxSickGrabber") << "Setting scan data configuration.";
-	laser.setScanDataCfg(targetDataCfg);
+	//laser.setScanDataCfg(targetDataCfg);
 	
 	ofLogNotice("ofxSickGrabber") << "Start measurments.";
-	laser.startMeas();
+	//laser.startMeas();
 	
 	ofLogNotice("ofxSickGrabber") << "Wait for ready status.";
 	int ret = 0, prevRet = 0;
-	while (ret != 7) {
+	/*while (ret != 7) {
 		ret = laser.queryStatus();
 		if(ret != prevRet) {
 			ofLogNotice("ofxSickGrabber") << "Status: " << getStatusString(ret);
 		}
 		prevRet = ret;
 		ofSleepMillis(10);
-	}
+	}*/
 	ofLogNotice("ofxSickGrabber") << "Ready, starting continuous data transmission.";
+	laser.startDevice();
+	sleep(4000);
 	laser.scanContinous(1);
 }
 

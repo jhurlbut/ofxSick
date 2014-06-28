@@ -1,10 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "LMS1xx.h"
-
-#include <sick_tim3xx/sick_tim3xx_common_tcp.h>
-#include <sick_tim3xx/sick_tim551_2050001_parser.h>
+#include "TIM3xx.h"
 
 class PulseData {
 public:
@@ -66,7 +63,7 @@ public:
 	void stopRecording(string filename);
 	
 protected:
-	LMS1xx laser;
+	TIM3xx laser;
 	string ip;
 	
 	bool recording;
